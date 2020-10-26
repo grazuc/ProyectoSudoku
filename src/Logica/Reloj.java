@@ -4,7 +4,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /** 
- * Clase Reloj
  * Implementa un Reloj.
  * @author Razuc Gonzalo.
  * */
@@ -18,12 +17,9 @@ public class Reloj{
 	
 	public void iniciarReloj() {
 		Timer timer = new Timer();
-
 		TimerTask tarea=new TimerTask() {
-			
 			@Override
 			public void run() {
-
 				if(segundos<10) {
 					segundosString="0"+segundos;
 					setSegundos(segundosString);
@@ -59,26 +55,33 @@ public class Reloj{
 				}
 			}
 		};
-		timer.schedule(tarea, 0, 1000); // en el 3er atributo debo poner 1000 si quiero que avance cada 1 segundo
+		timer.schedule(tarea, 0, 1000); //
 	}
+	
 	public void setSegundos(String s) {
 		this.segundosString=s;
 	}
+	
 	public void setMinutos(String s) {
 		this.minutosString=s;
 	}
+	
 	public void setHoras(String s) {
 		this.horasString=s;
 	}
+	
 	public String getHoras() {
 		return horasString;
 	}
+	
 	public String getMinutos() {
 		return minutosString;
 	}
+	
 	public String getSegundos() {
 		return segundosString;
 	}
+	
 	public int getHorasInt() {
 		return horas;
 	}

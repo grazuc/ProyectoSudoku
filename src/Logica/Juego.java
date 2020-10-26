@@ -168,7 +168,7 @@ public class Juego {
 	}
 	
 	/** 
-	 * Verifica que si la fila,columna y cuadrante cumplen con las reglas del Sudoku.
+	 * Verifica si la fila,columna y cuadrante cumplen con las reglas del Sudoku.
 	 * @param fila Fila a verificar.
 	 * @param columna Columna a verificar
 	 * @return boolean TRUE, Si cumple con las reglas, FALSE En caso contrario.
@@ -224,13 +224,9 @@ public class Juego {
 	 * @return boolean TRUE, Si el cuadrante cumple con las reglas del Sudoku, FALSE En caso contrario.
 	 * */
 	private boolean cumplePanel(int fila, int columna) {
-		
 		boolean cumple = false;
-		
 		Celda elemento = tablero[fila][columna];		
-	
 		switch(fila) {
-			
 		case 0, 1, 2: 
 			if(0 <= columna && columna <= 2) { //primer cuadrante
 				
@@ -279,9 +275,7 @@ public class Juego {
 	
 	
 	private boolean revisarPanel (int filaInicial, int filaFinal, int columnaInicial, int columnaFinal, Celda e) {
-		
 		boolean rta = true;
-		
 		for(int i = filaInicial; i<=filaFinal && rta; i++) {
 			for(int j = columnaInicial; j<=columnaFinal; j++) {
 				if((tablero[i][j] != null) && !(tablero[i][j].equals(e))) {
@@ -290,7 +284,6 @@ public class Juego {
 				}
 			}
 		}
-		
 		return rta;
 	}
 	

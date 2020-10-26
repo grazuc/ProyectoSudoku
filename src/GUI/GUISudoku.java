@@ -34,7 +34,8 @@ public class GUISudoku extends JFrame {
 	private JPanel contentPane,panelCeldas;
 	private JLabel[][] celdas;
 	private Juego juego;
-	private boolean sePuedeJugar=false;
+	Reloj r;
+	private boolean juegoIniciado;
 	private JLabel lblHoras,lblHoras2, labelMinutos,labelMinutos2, labelSegundos, labelSegundos2, lblFondo;
 	private String [] fondo=new String[] {"/Img/fondo.png"};
 	private String [] reloj=new String[] {"/ImgReloj/0.png","/ImgReloj/1.png","/ImgReloj/2.png","/ImgReloj/3.png",
@@ -62,6 +63,7 @@ public class GUISudoku extends JFrame {
 	
 	public GUISudoku() {
 		setTitle("Sudoku");
+		juegoIniciado=false;
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 640);
@@ -89,7 +91,7 @@ public class GUISudoku extends JFrame {
 		this.inicializarLabels();
 		/** */
 		
-		/** Labels para el reloj*/
+		/** Fondo del reloj*/
 		ImageIcon grafico0 = new ImageIcon(this.getClass().getResource(this.reloj[0]));
 		/** */
 		
@@ -151,7 +153,7 @@ public class GUISudoku extends JFrame {
 		btnFinalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (juego.victoria()) {
-					sePuedeJugar=false;
+					juegoIniciado=false;
 					JOptionPane.showMessageDialog(null, "¡Felicitaciones, ha terminado el juego! ", "Estado del juego", JOptionPane.INFORMATION_MESSAGE);
 					btnFinalizar.setEnabled(false);
 				}
@@ -167,7 +169,7 @@ public class GUISudoku extends JFrame {
 							celdas[i][j].setEnabled(true);
 					}
 				}
-				sePuedeJugar=true; //a partir de ahora pueden editarse las celdas!
+				juegoIniciado=true; //a partir de ahora pueden editarse las celdas!
 				btnjugar.setEnabled(false);
 				btnFinalizar.setEnabled(true);
 				iniciarReloj();
@@ -175,8 +177,6 @@ public class GUISudoku extends JFrame {
 			}
 			
 		});
-		/** */
-		
 	} /** Fin del constructor*/
 	
 	/** 
@@ -190,8 +190,7 @@ public class GUISudoku extends JFrame {
 
 			@Override
 			public void run() {
-				if(sePuedeJugar) {
-					/** el metodo getSegundos devuelve 00,01..60 */
+				if(juegoIniciado) {
 					ImageIcon graficoSegundosIzq, graficoSegundosDer;
 					int derecha=Integer.parseInt(r.getSegundos().charAt(1)+"");
 					int izquierda=Integer.parseInt(r.getSegundos().charAt(0)+"");
@@ -212,7 +211,7 @@ public class GUISudoku extends JFrame {
 					labelMinutos2.setIcon(graficoMinutosDer);
 					reDimensionar(labelMinutos2,graficoMinutosDer);
 					/** */
-					if(r.getHorasInt()>0) { //ineficiente repintar 2 labeles cada 1 segundo durante 1 hora por eso el if
+					if(r.getHorasInt()>0) { 
 						ImageIcon graficoHorasIzq, graficoHorasDer;
 						derecha=Integer.parseInt(r.getHoras().charAt(1)+"");
 						izquierda=Integer.parseInt(r.getHoras().charAt(0)+"");
@@ -261,11 +260,11 @@ public class GUISudoku extends JFrame {
 					label.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						if(sePuedeJugar)
+						if(juegoIniciado)
 							c.actualizarValor();
-						juego.accionar(c);
-						actualizarJuego();
-						reDimensionar(label,c.getEntidadGrafica().getGrafico());
+							juego.accionar(c);
+							actualizarJuego();
+							reDimensionar(label,c.getEntidadGrafica().getGrafico());
 					}
 					});	
 				}
